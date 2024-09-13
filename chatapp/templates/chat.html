@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opt-in / Opt-out Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #0c0ccf;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0c0ccf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join Scheduletime</h1>
+
+        <!-- Opt-in Form -->
+        <form id="optin-form">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone_number">Phone Number:</label>
+            <input type="tel" id="phone_number" name="phone_number" required placeholder="Enter your phone number">
+
+            <label>
+                <input type="checkbox" name="agreement" required> I agree to receive messages from Scheduletime.
+            </label>
+
+            <button type="submit">Join</button>
+        </form>
+
+        <h1>Opt-out</h1>
+
+        <!-- Opt-out Form -->
+        <form id="optout-form">
+            {% csrf_token %}
+            <label for="optout_phone_number">Phone Number:</label>
+            <input type="tel" id="optout_phone_number" name="phone_number" required placeholder="Enter your phone number to opt out">
+
+            <button type="submit">Opt out</button>
+        </form>
+    </div>
+
+    <script>
+        // Opt-in form submission
+        document.getElementById('optin-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phone_number').value;
+
+            fetch('/chatapp/optin/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ name, email, phone_number: phoneNumber }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => alert("Error: " + error));
+        });
+
+        // Opt-out form submission
+        document.getElementById('optout-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const phoneNumber = document.getElementById('optout_phone_number').value;
+
+            fetch('/chatapp/optout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ phone_number: phoneNumber }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);  // Display the success message
+                } else if (data.error) {
+                    alert(data.error);    // Display the error message if there's one
+                }
+            })
+            .catch(error => alert("Error: " + error));
+        });
+    </script>
+</body>
+</html>
