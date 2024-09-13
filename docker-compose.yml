@@ -6,10 +6,8 @@ services:
     command: python manage.py runserver 0.0.0.0:9090
     volumes:
       - .:/app
+      - ./db.sqlite3:/app/db.sqlite3
     ports:
       - "9090:9090"
     environment:
       - DEBUG=True  # Optional, useful for development
-
-volumes:
-  - ./db.sqlite3:/app/db.sqlite3
