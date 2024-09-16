@@ -24,7 +24,8 @@ setup(
         'Django>=3.0',  # Add your dependencies here
         "dateparser",
         "twilio",
-        "elevenlabs "
+        "elevenlabs",
+        "docx2txt"
     ],
     python_requires='>=3.6',
 )
