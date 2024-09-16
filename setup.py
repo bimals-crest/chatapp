@@ -23,7 +23,8 @@ setup(
     install_requires=[
         'Django>=3.0',  # Add your dependencies here
         "dateparser",
-        "twilio"
+        "twilio",
+        "elevenlabs "
     ],
     python_requires='>=3.6',
 )
