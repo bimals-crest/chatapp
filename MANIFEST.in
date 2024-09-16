@@ -1,0 +1,3 @@
+include README.md
+recursive-include chatapp/templates *
+recursive-include chatapp/migrations *
