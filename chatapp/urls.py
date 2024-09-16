@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'chatapp'
+
 urlpatterns = [
     path('optin/', views.optin, name='optin'),
     path('optout/', views.optout, name='optout'),

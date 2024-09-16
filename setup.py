@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='chatapp',  # Package name
-    version='0.1.1',  # Initial version
+    version='0.1.2',  # Initial version
     packages=find_packages(),
     include_package_data=True,
     license='MIT License',  # License type
