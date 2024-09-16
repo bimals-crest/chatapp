@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='chatapp',  # Package name
-    version='0.1.0',  # Initial version
+    version='0.1.1',  # Initial version
     packages=find_packages(),
     include_package_data=True,
     license='MIT License',  # License type
@@ -22,6 +22,7 @@ setup(
     ],
     install_requires=[
         'Django>=3.0',  # Add your dependencies here
+        "dateparser"
     ],
     python_requires='>=3.6',
 )
